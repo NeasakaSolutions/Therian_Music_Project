@@ -1,18 +1,15 @@
-# Entorno virtual
+# Entornos virtuales
 venv/
 
-# Archivos de Python
+# Variables de entorno
+.env
+
+# Base de datos
+db.sqlite3
+
+# Python
 __pycache__/
 *.pyc
 
-# Archivos de entorno
-.env
-
-# Base de datos (Django)
-db.sqlite3
-
-# Archivos estáticos compilados
-staticfiles/
-
-# VS Code (opcional)
-.vscode/
+# Archivos comprimidos
+*.zip
