@@ -3,10 +3,16 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import './style.css'
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+
+const themeStore = app.config.globalProperties.$pinia?.state?.value?.theme
+if (themeStore !== false) {
+  document.documentElement.classList.add('dark')
+}
 
 app.mount('#app')

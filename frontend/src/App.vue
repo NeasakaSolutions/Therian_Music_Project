@@ -1,11 +1,23 @@
-<script setup></script>
+<script setup>
+import { useThemeStore } from '@/stores/theme'
+import WavesBackground from '@/components/WavesBackground.vue'
+import Navbar from '@/components/Navbar.vue'
+import MusicPlayer from '@/components/MusicPlayer.vue'
+
+const themeStore = useThemeStore()
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div :class="{ 'dark': themeStore.isDark }" class="min-h-screen transition-colors duration-300">
+    <WavesBackground />
+    <Navbar />
+    <router-view />
+    <MusicPlayer />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.dark {
+  color-scheme: dark;
+}
+</style>
