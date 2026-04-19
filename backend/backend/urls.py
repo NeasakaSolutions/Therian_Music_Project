@@ -11,6 +11,7 @@ urlpatterns = [
     # Rutas de ejemplo/pruebas
     path('', include("home.urls")),
     path('api/mai/', include("uwu.urls")),
+    path('api/mai/', include("categorias.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
