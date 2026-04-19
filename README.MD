@@ -16,3 +16,8 @@ django-admin manage.py runserver
 ```bash
 python manage.py runserver
 ```
+
+- Configuracion para la base de datos:
+```bash
+sudo apt install python3-dev default-libmysqlclient-dev build-essential
+```
