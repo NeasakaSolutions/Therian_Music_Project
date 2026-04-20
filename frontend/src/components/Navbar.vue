@@ -10,14 +10,16 @@ const authStore = useAuthStore()
 const themeStore = useThemeStore()
 const musicStore = useMusicStore()
 
-const showMobileMenu = ref(false)
-
 function handleAuth() {
   router.push('/login')
 }
 
 function goHome() {
   router.push('/inicio')
+}
+
+function goToDashboard() {
+  router.push('/dashboard')
 }
 </script>
 
@@ -60,11 +62,15 @@ function goHome() {
           </button>
 
           <template v-if="authStore.isAuthenticated">
-            <div class="flex items-center gap-3">
+            <button
+              @click="goToDashboard"
+              class="flex items-center gap-3 bg-white/10 hover:bg-white/20 rounded-full pr-4 transition-colors"
+            >
               <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-white font-bold">
                 {{ authStore.currentUser?.name?.charAt(0).toUpperCase() }}
               </div>
-            </div>
+              <span class="text-white text-sm hidden sm:block">Mi Perfil</span>
+            </button>
           </template>
 
           <template v-else>

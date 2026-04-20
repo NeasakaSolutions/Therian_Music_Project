@@ -6,13 +6,9 @@ import router from './router'
 import './style.css'
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
-
-const themeStore = app.config.globalProperties.$pinia?.state?.value?.theme
-if (themeStore !== false) {
-  document.documentElement.classList.add('dark')
-}
 
 app.mount('#app')

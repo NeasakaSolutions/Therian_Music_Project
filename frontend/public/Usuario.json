@@ -1,0 +1,10 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "name": "Usuario Demo",
+      "email": "demo@therianmusic.com",
+      "password": "demo123"
+    }
+  ]
+}

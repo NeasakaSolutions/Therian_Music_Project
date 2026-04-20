@@ -4,11 +4,16 @@ import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
 import { useMusicStore } from '@/stores/music'
 import TrackCard from '@/components/TrackCard.vue'
+import Carousel from '@/components/Carousel.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
 const musicStore = useMusicStore()
+
+function handleTrackSelect(track) {
+  musicStore.playTrack(track)
+}
 </script>
 
 <template>
@@ -66,7 +71,7 @@ const musicStore = useMusicStore()
               <span class="w-14"></span>
               <span>TÍTULO</span>
               <span class="hidden sm:block">ÁLBUM</span>
-              <span class="text-right pr-8">⏱</span>
+              <span class="text-right pr-8">��</span>
             </div>
             
             <div class="divide-y divide-white/5">
@@ -84,36 +89,30 @@ const musicStore = useMusicStore()
             <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-sm">✨</span>
             Recomendados para ti
           </h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            <div
-              v-for="track in musicStore.playlist"
-              :key="track.id"
-              @click="musicStore.playTrack(track)"
-              class="group cursor-pointer"
-            >
-              <div class="relative aspect-square rounded-xl overflow-hidden mb-2 shadow-lg group-hover:shadow-xl transition-shadow">
-                <img
-                  :src="track.cover"
-                  :alt="track.title"
-                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
-                    <svg v-if="musicStore.currentTrack?.id === track.id && musicStore.isPlaying" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                    </svg>
-                    <svg v-else class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
+          <Carousel :items="musicStore.playlist" @select="handleTrackSelect">
+            <template #default="{ item }">
+              <div class="group cursor-pointer">
+                <div class="relative aspect-square rounded-xl overflow-hidden mb-2 shadow-lg group-hover:shadow-xl transition-shadow">
+                  <img
+                    :src="item.cover"
+                    :alt="item.title"
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+                      <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
                   </div>
                 </div>
+                <h4 class="text-white font-medium truncate group-hover:text-purple-400 transition-colors">
+                  {{ item.title }}
+                </h4>
+                <p class="text-white/50 text-sm truncate">{{ item.artist }}</p>
               </div>
-              <h4 class="text-white font-medium truncate group-hover:text-purple-400 transition-colors">
-                {{ track.title }}
-              </h4>
-              <p class="text-white/50 text-sm truncate">{{ track.artist }}</p>
-            </div>
-          </div>
+            </template>
+          </Carousel>
         </section>
 
         <section>

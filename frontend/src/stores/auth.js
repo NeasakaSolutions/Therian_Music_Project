@@ -2,8 +2,30 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {
-  const users = ref(JSON.parse(localStorage.getItem('users')) || [])
+  const users = ref([])
   const currentUser = ref(JSON.parse(localStorage.getItem('currentUser')) || null)
+
+  async function initializeUsers() {
+    try {
+      const response = await fetch('/Usuario.json')
+      const data = await response.json()
+      users.value = data.usuarios || []
+      const storedUsers = JSON.parse(localStorage.getItem('users'))
+      if (storedUsers && storedUsers.length > 0) {
+        const combined = [...users.value]
+        storedUsers.forEach(u => {
+          if (!combined.find(existing => existing.email === u.email)) {
+            combined.push(u)
+          }
+        })
+        users.value = combined
+      }
+    } catch (error) {
+      users.value = JSON.parse(localStorage.getItem('users')) || []
+    }
+  }
+
+  initializeUsers()
 
   const isAuthenticated = computed(() => !!currentUser.value)
 
@@ -40,5 +62,5 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('currentUser')
   }
 
-  return { users, currentUser, isAuthenticated, register, login, logout }
+  return { users, currentUser, isAuthenticated, register, login, logout, initializeUsers }
 })

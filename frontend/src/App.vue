@@ -1,14 +1,19 @@
 <script setup>
+import { onMounted } from 'vue'
 import { useThemeStore } from '@/stores/theme'
 import WavesBackground from '@/components/WavesBackground.vue'
 import Navbar from '@/components/Navbar.vue'
 import MusicPlayer from '@/components/MusicPlayer.vue'
 
 const themeStore = useThemeStore()
+
+onMounted(() => {
+  themeStore.applyTheme()
+})
 </script>
 
 <template>
-  <div :class="{ 'dark': themeStore.isDark }" class="min-h-screen transition-colors duration-300">
+  <div :class="{ 'dark': themeStore.isDark, 'light': !themeStore.isDark }" class="min-h-screen transition-colors duration-300">
     <WavesBackground />
     <Navbar />
     <router-view />

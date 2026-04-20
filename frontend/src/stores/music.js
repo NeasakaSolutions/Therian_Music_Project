@@ -68,11 +68,57 @@ export const useMusicStore = defineStore('music', () => {
     },
     {
       id: 7,
-      title: 'Angel Echo',
-      artist: 'nulloath',
-      album: 'pussypodium',
-      duration: 189,
-      src: 'src/recursos/musica/nulloath - Angel Echo (Slowed) - (320 Kbps).mp3'
+      title: 'Neon Nights',
+      artist: 'Synth Masters',
+      album: 'Retro',
+      duration: 256,
+      cover: 'https://picsum.photos/seed/music7/300/300',
+      src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'
+    },
+    {
+      id: 8,
+      title: 'Sunset Boulevard',
+      artist: 'Golden Hour',
+      album: 'Sunrise',
+      duration: 203,
+      cover: 'https://picsum.photos/seed/music8/300/300',
+      src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'
+    },
+    {
+      id: 9,
+      title: 'Digital Dreams',
+      artist: 'Cyber Orchestra',
+      album: 'Digital',
+      duration: 278,
+      cover: 'https://picsum.photos/seed/music9/300/300',
+      src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
+    },
+    {
+      id: 10,
+      title: 'Rainbow Sky',
+      artist: 'Prism',
+      album: 'Colors',
+      duration: 221,
+      cover: 'https://picsum.photos/seed/music10/300/300',
+      src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'
+    },
+    {
+      id: 11,
+      title: 'Deep Forest',
+      artist: 'Nature Sounds',
+      album: 'Forest',
+      duration: 289,
+      cover: 'https://picsum.photos/seed/music11/300/300',
+      src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3'
+    },
+    {
+      id: 12,
+      title: 'Mountain Echo',
+      artist: 'Alpine',
+      album: 'Peaks',
+      duration: 245,
+      cover: 'https://picsum.photos/seed/music12/300/300',
+      src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3'
     }
   ])
 
