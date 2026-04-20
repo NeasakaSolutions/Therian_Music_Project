@@ -13,6 +13,7 @@ class Cancion(models.Model):
     slug = AutoSlugField(populate_from = "nombre", max_length = 100)
     foto = models.CharField(max_length = 100, null = True)
     cancion = models.CharField(max_length = 100, null = True)
+    video = models.CharField(max_length = 100, null = True)
     descripcion = models.TextField()
     fecha = models.DateTimeField(auto_now = True)
 

@@ -91,7 +91,8 @@ class CancionesLista(APIView):
                 artista_id = request.data.get("artista_id"),
                 fecha = datetime.now(),
                 foto = "sss",
-                cancion = "ssss"
+                cancion = "ssss",
+                video = "ssssssss"
             )
 
             return JsonResponse({
@@ -121,7 +122,8 @@ class CancionDetalle(APIView):
                     "categoria_id": data.categoria_id,
                     "categoria": data.categoria.nombre,
                     "imagen": f"{os.getenv("BASE_URL")}uploads/canciones/{data.foto}",
-                    "cancion": f"{os.getenv("BASE_URL")}uploads/canciones/{data.cancion}"
+                    "cancion": f"{os.getenv("BASE_URL")}uploads/canciones/{data.cancion}",
+                    "video": f"{os.getenv("BASE_URL")}uploads/canciones/{data.video}"
                     }
             }, status = HTTPStatus.OK)
 
