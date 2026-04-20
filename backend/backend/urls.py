@@ -8,10 +8,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/mai/', include("categorias.urls")),
+    path('api/mai/', include("artistas.urls")),
+    path('api/mai/', include("canciones.urls")),
     # Rutas de ejemplo/pruebas
     path('', include("home.urls")),
     path('api/mai/', include("uwu.urls")),
-    path('api/mai/', include("categorias.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
