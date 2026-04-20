@@ -1,1 +1,26 @@
+# Importaciones:
+from django.db import models
+from autoslug import AutoSlugField
+from categorias.models import Categoria
+from artistas.models import Artista
+
+
+# Create your models here.
+class Cancion(models.Model):
+    artista = models.ForeignKey(Artista, models.DO_NOTHING)
+    categoria = models.ForeignKey(Categoria, models.DO_NOTHING)
+    nombre = models.CharField(max_length = 100, null = False)
+    slug = AutoSlugField(populate_from = "nombre", max_length = 100)
+    foto = models.CharField(max_length = 100, null = True)
+    cancion = models.CharField(max_length = 100, null = True)
+    descripcion = models.TextField()
+    fecha = models.DateTimeField(auto_now = True)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        db_table = "canciones"
+        verbose_name = "Cancion"
+        verbose_name_plural = "Canciones"
 
