@@ -56,6 +56,18 @@ class CancionesLista(APIView):
                 "mensaje": "El campo artista es obligatorio"
             }, status = HTTPStatus.BAD_REQUEST)
         
+        if request.FILES.get("foto") is None or not request.FILES.get("foto"):
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "El campo foto es obligatorio"
+            }, status =  HTTPStatus.BAD_REQUEST)
+        
+        if request.FILES.get("cancion") is None or not request.FILES.get("cancion"):
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "El campo cancion es obligatorio"
+            }, status =  HTTPStatus.BAD_REQUEST)
+        
         # Validar que exista la categoria:
         try:
             categoria = Categoria.objects.filter(id = request.data["categoria_id"]).get()
@@ -82,6 +94,64 @@ class CancionesLista(APIView):
                 "estado": "error",
                 "mensaje": "El nombre de la cancion ya existe"
             }, status = HTTPStatus.BAD_REQUEST)
+        
+
+        # Variable para usar FileSystemStorage
+        fs = FileSystemStorage()
+
+        # Subir imagen
+        try:
+            foto = f"{datetime.timestamp(datetime.now())}{os.path.splitext(str(request.FILES["foto"]))[1]}"
+
+        except Exception as e:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Debe de adjuntar una imagen."
+                }, status = HTTPStatus.BAD_REQUEST)
+        
+        try:
+            fs.save(f"canciones/{foto}", request.FILES["foto"]) # Guardar archivo
+            fs.url(request.FILES["foto"])
+
+        except Exception as e:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Se produjo un error al subir la imagen."
+            }, status = HTTPStatus.BAD_REQUEST)
+        
+        # Subir cancion:
+        try:
+            cancion = f"{datetime.timestamp(datetime.now())}{os.path.splitext(str(request.FILES["cancion"]))[1]}"
+
+        except Exception as e:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Debe de adjuntar una cancion."
+                }, status = HTTPStatus.BAD_REQUEST)
+        
+        try:
+            fs.save(f"canciones/{cancion}", request.FILES["cancion"]) # Guardar archivo
+            fs.url(request.FILES["cancion"])
+
+        except Exception as e:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Se produjo un error al subir la cancion."
+            }, status = HTTPStatus.BAD_REQUEST)
+        
+        # Subir video
+        video_file = request.FILES.get("video")
+        video = None
+
+        if video_file:
+            try:
+                video = f"{datetime.timestamp(datetime.now())}{os.path.splitext(video_file.name)[1]}"
+                fs.save(f"canciones/{video}", video_file)
+            except Exception:
+                return JsonResponse({
+                    "estado": "error",
+                    "mensaje": "Se produjo un error al subir el video."
+                }, status=HTTPStatus.BAD_REQUEST)
 
         # Crear campo
         try:
@@ -91,9 +161,9 @@ class CancionesLista(APIView):
                 categoria_id = request.data.get("categoria_id"),
                 artista_id = request.data.get("artista_id"),
                 fecha = datetime.now(),
-                foto = "sss",
-                cancion = "ssss",
-                video = "ssssssss"
+                foto = foto,
+                cancion = cancion,
+                video = video
             )
 
             return JsonResponse({
