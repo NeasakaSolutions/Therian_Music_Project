@@ -8,6 +8,7 @@ from django.http import Http404
 from django.utils.text import slugify
 from categorias.serializers import CategoriaSerializer
 from categorias.models import Categoria
+from canciones.models import Cancion
 
 # Clase sin argumentos:
 class CategoriaLista(APIView):
@@ -90,12 +91,18 @@ class CategoriaDetalle(APIView):
         # Eliminar registro:
         try:
             data = Categoria.objects.filter(id = id).get()
-            Categoria.objects.filter(id = id).delete()
             
+        except Categoria.DoesNotExist:
+            raise Http404
+        
+        if Cancion.objects.filter(categoria_id = id).exists():
             return JsonResponse({
+                "estado": "error",
+                "mensaje": "Ocurrio un error inesperado"
+            }, status = HTTPStatus.BAD_REQUEST)
+
+        Categoria.objects.filter(id = id).delete()
+        return JsonResponse({
                 "estado": "ok",
                 "mensaje": "Se elimino el registro exitosamente"
             }, status = HTTPStatus.OK)
-
-        except Categoria.DoesNotExist:
-            raise Http404

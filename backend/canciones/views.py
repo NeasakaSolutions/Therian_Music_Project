@@ -31,148 +31,155 @@ class CancionesLista(APIView):
     # Agregar campo
     def post(self, request):
 
-        # Validaciones:
-        if request.data.get("nombre") == None or not request.data.get("nombre"):
+        # validaciones de campos
+        if not request.data.get("nombre"):
             return JsonResponse({
                 "estado": "error",
                 "mensaje": "El campo nombre es obligatorio"
-            }, status = HTTPStatus.BAD_REQUEST)
-        
-        if request.data.get("descripcion") == None or not request.data.get("descripcion"):
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.data.get("descripcion"):
             return JsonResponse({
                 "estado": "error",
                 "mensaje": "El campo descripcion es obligatorio"
-            }, status = HTTPStatus.BAD_REQUEST)
-        
-        if request.data.get("categoria_id") == None or not request.data.get("categoria_id"):
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.data.get("categoria_id"):
             return JsonResponse({
                 "estado": "error",
                 "mensaje": "El campo categoria es obligatorio"
-            }, status = HTTPStatus.BAD_REQUEST)
-        
-        if request.data.get("artista_id") == None or not request.data.get("artista_id"):
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.data.get("artista_id"):
             return JsonResponse({
                 "estado": "error",
                 "mensaje": "El campo artista es obligatorio"
-            }, status = HTTPStatus.BAD_REQUEST)
-        
-        if request.FILES.get("foto") is None or not request.FILES.get("foto"):
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.FILES.get("foto"):
             return JsonResponse({
                 "estado": "error",
                 "mensaje": "El campo foto es obligatorio"
-            }, status =  HTTPStatus.BAD_REQUEST)
-        
-        if request.FILES.get("cancion") is None or not request.FILES.get("cancion"):
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.FILES.get("cancion"):
             return JsonResponse({
                 "estado": "error",
                 "mensaje": "El campo cancion es obligatorio"
-            }, status =  HTTPStatus.BAD_REQUEST)
-        
-        # Validar que exista la categoria:
-        try:
-            categoria = Categoria.objects.filter(id = request.data["categoria_id"]).get()
+            }, status=HTTPStatus.BAD_REQUEST)
 
+
+        # validar existencia
+        try:
+            categoria = Categoria.objects.get(id=request.data.get("categoria_id"))
         except Categoria.DoesNotExist:
             return JsonResponse({
                 "estado": "error",
-                "mensaje": "La categoria ingresada no existe"
-            }, status = HTTPStatus.BAD_REQUEST)
-        
-        # Validar que exista el artista:
-        try:
-            artista = Artista.objects.filter(id = request.data["artista_id"]).get()
+                "mensaje": "La categoria no existe"
+            }, status=HTTPStatus.BAD_REQUEST)
 
+        try:
+            artista = Artista.objects.get(id=request.data.get("artista_id"))
         except Artista.DoesNotExist:
             return JsonResponse({
                 "estado": "error",
-                "mensaje": "El artista ingresado no existe"
-            }, status = HTTPStatus.BAD_REQUEST)
+                "mensaje": "El artista no existe"
+            }, status=HTTPStatus.BAD_REQUEST)
 
-        # Validar que el nombre de la cancion no se repita:
-        if Cancion.objects.filter(nombre = request.data.get("nombre")).exists():
+
+        # validar duplicado
+        if Cancion.objects.filter(nombre=request.data.get("nombre")).exists():
             return JsonResponse({
                 "estado": "error",
-                "mensaje": "El nombre de la cancion ya existe"
-            }, status = HTTPStatus.BAD_REQUEST)
-        
+                "mensaje": "La cancion ya existe"
+            }, status=HTTPStatus.BAD_REQUEST)
 
-        # Variable para usar FileSystemStorage
+
         fs = FileSystemStorage()
 
-        # Subir imagen
-        try:
-            foto = f"{datetime.timestamp(datetime.now())}{os.path.splitext(str(request.FILES["foto"]))[1]}"
+        # subir imagen
+        foto_file = request.FILES["foto"]
 
-        except Exception as e:
+        if foto_file.content_type not in ["image/jpeg", "image/png", "image/webp"]:
             return JsonResponse({
                 "estado": "error",
-                "mensaje": "Debe de adjuntar una imagen."
-                }, status = HTTPStatus.BAD_REQUEST)
-        
-        try:
-            fs.save(f"canciones/{foto}", request.FILES["foto"]) # Guardar archivo
-            fs.url(request.FILES["foto"])
+                "mensaje": "Formato de imagen no valido"
+            }, status=HTTPStatus.BAD_REQUEST)
 
-        except Exception as e:
+        try:
+            ext = os.path.splitext(foto_file.name)[1]
+            foto = f"{datetime.timestamp(datetime.now())}{ext}"
+            fs.save(f"canciones/{foto}", foto_file)
+        except Exception:
             return JsonResponse({
                 "estado": "error",
-                "mensaje": "Se produjo un error al subir la imagen."
-            }, status = HTTPStatus.BAD_REQUEST)
-        
-        # Subir cancion:
-        try:
-            cancion = f"{datetime.timestamp(datetime.now())}{os.path.splitext(str(request.FILES["cancion"]))[1]}"
+                "mensaje": "Error al subir la imagen"
+            }, status=HTTPStatus.BAD_REQUEST)
 
-        except Exception as e:
+        # subir cancion
+        cancion_file = request.FILES["cancion"]
+
+        if cancion_file.content_type not in ["audio/mpeg", "audio/wav", "audio/ogg", "audio/mp4"]:
             return JsonResponse({
                 "estado": "error",
-                "mensaje": "Debe de adjuntar una cancion."
-                }, status = HTTPStatus.BAD_REQUEST)
-        
-        try:
-            fs.save(f"canciones/{cancion}", request.FILES["cancion"]) # Guardar archivo
-            fs.url(request.FILES["cancion"])
+                "mensaje": "Formato de audio no valido"
+            }, status=HTTPStatus.BAD_REQUEST)
 
-        except Exception as e:
+        try:
+            ext = os.path.splitext(cancion_file.name)[1]
+            cancion = f"{datetime.timestamp(datetime.now())}{ext}"
+            fs.save(f"canciones/{cancion}", cancion_file)
+        except Exception:
             return JsonResponse({
                 "estado": "error",
-                "mensaje": "Se produjo un error al subir la cancion."
-            }, status = HTTPStatus.BAD_REQUEST)
-        
-        # Subir video
+                "mensaje": "Error al subir la cancion"
+            }, status=HTTPStatus.BAD_REQUEST)
+
+
+        # subir video (opcional)
         video_file = request.FILES.get("video")
         video = None
 
         if video_file:
+            if video_file.content_type not in ["video/mp4", "video/webm", "video/ogg"]:
+                return JsonResponse({
+                    "estado": "error",
+                    "mensaje": "Formato de video no valido"
+                }, status=HTTPStatus.BAD_REQUEST)
+
             try:
-                video = f"{datetime.timestamp(datetime.now())}{os.path.splitext(video_file.name)[1]}"
+                ext = os.path.splitext(video_file.name)[1]
+                video = f"{datetime.timestamp(datetime.now())}{ext}"
                 fs.save(f"canciones/{video}", video_file)
             except Exception:
                 return JsonResponse({
                     "estado": "error",
-                    "mensaje": "Se produjo un error al subir el video."
+                    "mensaje": "Error al subir el video"
                 }, status=HTTPStatus.BAD_REQUEST)
 
-        # Crear campo
+        # crear registro
         try:
             Cancion.objects.create(
-                nombre = request.data.get("nombre"),
-                descripcion = request.data.get("descripcion"),
-                categoria_id = request.data.get("categoria_id"),
-                artista_id = request.data.get("artista_id"),
-                fecha = datetime.now(),
-                foto = foto,
-                cancion = cancion,
-                video = video
+                nombre=request.data.get("nombre"),
+                descripcion=request.data.get("descripcion"),
+                categoria=categoria,
+                artista=artista,
+                fecha=datetime.now(),
+                foto=foto,
+                cancion=cancion,
+                video=video
             )
 
             return JsonResponse({
                 "estado": "ok",
                 "mensaje": "Se creo el registro correctamente"
-            }, status = HTTPStatus.CREATED)
+            }, status=HTTPStatus.CREATED)
 
-        except Exception as e:
-            raise Http404
+        except Exception:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Error al guardar en la base de datos"
+            }, status=HTTPStatus.INTERNAL_SERVER_ERROR)
     
 # Clase con  argumentos:
 class CancionDetalle(APIView):
@@ -200,4 +207,98 @@ class CancionDetalle(APIView):
 
         except Cancion.DoesNotExist:
             raise Http404
+
+    # Modificar un registro:
+    def put(self, request, id):
+        
+        try:
+            data = Cancion.objects.filter(id = id).get()
+
+        except Cancion.DoesNotExist:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Ocurrio un error"
+            }, status = HTTPStatus.NOT_FOUND)
+        
+        # validaciones de campos
+        if not request.data.get("nombre"):
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "El campo nombre es obligatorio"
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.data.get("descripcion"):
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "El campo descripcion es obligatorio"
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.data.get("categoria_id"):
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "El campo categoria es obligatorio"
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        if not request.data.get("artista_id"):
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "El campo artista es obligatorio"
+            }, status=HTTPStatus.BAD_REQUEST)
+
+        try:
+            Cancion.objects.filter(id = id).update(
+                nombre = request.data.get("nombre"),
+                slug = slugify(request.data["nombre"]),
+                descripcion = request.data.get("descripcion"),
+                categoria = Categoria.objects.get(id=request.data.get("categoria_id")),
+                artista = Artista.objects.get(id=request.data.get("artista_id")),
+            )
+
+            return JsonResponse({
+                "estado": "ok",
+                "mensaje": "Se modifico el registro correctamente"
+            }, status = HTTPStatus.OK)
+
+        except:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Ocurrio un error"
+            }, status = HTTPStatus.BAD_REQUEST)
+
+    # Eliminar un registro:
+    def delete(self, request, id):
+
+        try:
+            data = Cancion.objects.get(id=id)
+        except Cancion.DoesNotExist:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Registro no encontrado"
+            }, status=HTTPStatus.NOT_FOUND)
+
+        base_path = "./uploads/canciones/"
+
+        # foto
+        path_foto = base_path + str(data.foto)
+        if os.path.exists(path_foto):
+            os.remove(path_foto)
+
+        # cancion
+        path_cancion = base_path + str(data.cancion)
+        if os.path.exists(path_cancion):
+            os.remove(path_cancion)
+
+        # video
+        if data.video:
+            path_video = base_path + str(data.video)
+            if os.path.exists(path_video):
+                os.remove(path_video)
+
+        # eliminar registro
+        Cancion.objects.filter(id = id).delete()
+
+        return JsonResponse({
+            "estado": "ok",
+            "mensaje": "Registro eliminado correctamente"
+        }, status=HTTPStatus.OK)
 
