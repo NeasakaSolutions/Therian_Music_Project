@@ -11,6 +11,8 @@ urlpatterns = [
     path('api/mai/', include("categorias.urls")),
     path('api/mai/', include("artistas.urls")),
     path('api/mai/', include("canciones.urls")),
+    path('api/mai/', include("contacto.urls")),
+    path('api/mai/', include("seguridad.urls")),
     # Rutas de ejemplo/pruebas
     path('', include("home.urls")),
     path('api/mai/', include("uwu.urls")),

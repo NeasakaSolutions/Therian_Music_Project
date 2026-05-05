@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'categorias',
     'artistas',
     'canciones',
+    'contacto',
+    'seguridad',
 ]
 
 MIDDLEWARE = [
