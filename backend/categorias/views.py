@@ -5,6 +5,7 @@ from django.http.response import JsonResponse
 from rest_framework.response import Response
 from http import HTTPStatus
 from django.http import Http404
+from seguridad.decorators import logueado
 from django.utils.text import slugify
 from categorias.serializers import CategoriaSerializer
 from categorias.models import Categoria
@@ -22,6 +23,7 @@ class CategoriaLista(APIView):
         return JsonResponse({"data": datos_json.data}, status = HTTPStatus.OK)
     
     # Agregar categoria:
+    @logueado()
     def post(self, request):
         
         # Validaciones:
@@ -62,6 +64,7 @@ class CategoriaDetalle(APIView):
             raise Http404
     
     # Modificar registro:
+    @logueado()
     def put(self, request, id):
         
         # Validaciones:
@@ -86,6 +89,7 @@ class CategoriaDetalle(APIView):
             raise Http404
         
     # Eliminar registro:
+    @logueado()
     def delete(self, request, id):
         
         # Eliminar registro:

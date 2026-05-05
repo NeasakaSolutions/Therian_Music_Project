@@ -11,6 +11,7 @@ from django.utils.text import slugify
 from django.utils.dateformat import DateFormat
 from datetime import datetime
 from django.core.files.storage import FileSystemStorage
+from seguridad.decorators import logueado
 from canciones.models import Cancion
 from categorias.models import Categoria
 from artistas.models import Artista
@@ -29,6 +30,7 @@ class CancionesLista(APIView):
         })
     
     # Agregar campo
+    @logueado()
     def post(self, request):
 
         # validaciones de campos
@@ -209,6 +211,7 @@ class CancionDetalle(APIView):
             raise Http404
 
     # Modificar un registro:
+    @logueado()
     def put(self, request, id):
         
         try:
@@ -266,6 +269,7 @@ class CancionDetalle(APIView):
             }, status = HTTPStatus.BAD_REQUEST)
 
     # Eliminar un registro:
+    @logueado()
     def delete(self, request, id):
 
         try:
