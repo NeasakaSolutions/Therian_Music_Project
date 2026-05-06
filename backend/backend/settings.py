@@ -1,5 +1,16 @@
 # Importaciones:
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Cargamos el dotenv:
+ENV = os.getenv("ENVIRONMENT", "local")
+
+# Configuracion para determinar si es en local o en produccion:
+if ENV == "production":
+    load_dotenv(".env.production")
+else:
+    load_dotenv(".env.local")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ct(vk#a(22oq=sskbyxx1msw%ng!k5j0u9j89yiwncnt*yjhm('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -26,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'categorias',
+    'artistas',
+    'canciones',
+    'contacto',
+    'seguridad',
 ]
 
 MIDDLEWARE = [
@@ -62,9 +79,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("DATABASE_DB"),
+        "USER": os.getenv("DATABASE_USER"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "HOST": os.getenv("DATABASE_SERVER"),
+        "PORT": os.getenv("DATABASE_PORT"),
+        "OPTIONS": {
+            "autocommit": True
+        }
     }
 }
 
@@ -103,4 +127,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/assets/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
+
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
