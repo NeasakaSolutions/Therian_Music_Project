@@ -13,7 +13,6 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const error = ref('')
-const loading = ref(false)
 
 async function handleRegister() {
   error.value = ''
@@ -33,14 +32,10 @@ async function handleRegister() {
     return
   }
 
-  loading.value = true
-  await new Promise(r => setTimeout(r, 500))
-
-  const result = authStore.register(email.value, password.value, name.value)
-  loading.value = false
+  const result = await authStore.register(name.value, email.value, password.value)
 
   if (result.success) {
-    router.push('/inicio')
+    router.push('/login')
   } else {
     error.value = result.message
   }
@@ -74,11 +69,11 @@ async function handleRegister() {
         </h1>
         <p class="text-violet-500 dark:text-violet-400 text-sm">Tu música, tu esencia</p>
       </div>
-      
+
       <h2 class="text-2xl font-semibold text-center mb-6 text-violet-900 dark:text-violet-100">
         Crear Cuenta
       </h2>
-      
+
       <form @submit.prevent="handleRegister" class="space-y-5">
         <div class="relative">
           <input
@@ -97,7 +92,7 @@ async function handleRegister() {
             class="w-full bg-violet-100 dark:bg-white/5 text-violet-900 dark:text-white rounded-xl px-5 py-4 outline-none focus:ring-2 focus:ring-violet-500 border border-transparent focus:border-violet-500 transition-all"
           />
         </div>
-        
+
         <div class="relative">
           <input
             v-model="password"
@@ -122,10 +117,10 @@ async function handleRegister() {
 
         <button
           type="submit"
-          :disabled="loading"
+          :disabled="authStore.loading"
           class="w-full bg-gradient-to-r from-purple-500 to-violet-600 text-white font-bold py-4 rounded-xl hover:from-purple-600 hover:to-violet-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 shadow-lg shadow-purple-500/25"
         >
-          {{ loading ? 'Cargando...' : 'Registrarse' }}
+          {{ authStore.loading ? 'Cargando...' : 'Registrarse' }}
         </button>
       </form>
 

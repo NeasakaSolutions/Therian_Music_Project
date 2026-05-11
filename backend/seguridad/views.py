@@ -94,7 +94,7 @@ class Clase_Verificacion(APIView):
             UsersMetadata.objects.filter(token = token).update(token = "")
             User.objects.filter(id = data.user_id).update(is_active = 1)
 
-            return HttpResponseRedirect(os.getenv("BASE_URL_FRONTED"))
+            return HttpResponseRedirect(os.getenv("FRONTEND_URL"))
 
         except UsersMetadata.DoesNotExist:
             raise Http404

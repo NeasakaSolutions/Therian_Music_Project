@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "1dd42280-6f8e-41b4-bfb9-4da822816a44",
+		"name": "Django_Therian_Music",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46266878",
+		"_collection_link": "https://neasaka-8828260.postman.co/workspace/Neasaka's-Workspace~c3b786f1-b98a-46b8-8c1d-c44ca203e4cb/collection/46266878-1dd42280-6f8e-41b4-bfb9-4da822816a44?action=share&source=collection_link&creator=46266878"
+	},
+	"item": [
+		{
+			"name": "Ejemplo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"correo\": \"satou.3443@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/ouzuka",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"ouzuka"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ejemplo-Uploads",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/satou/Documentos/Fondos/MAI_03.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/ouzuka-upload",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"ouzuka-upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categorias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/categorias/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"categorias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categorias",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Categoria de prueba\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/categorias",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
+
+ //ejemplo, ejemplo-upload,uwu

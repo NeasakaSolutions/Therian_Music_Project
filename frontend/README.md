@@ -76,13 +76,13 @@ npm run lint
 
 ## Características
 
-- 🎵 Reproductor de música con controles
-- 🌊 Animación de ondas de fondo
-- 🌓 Tema oscuro/claro
-- 🔍 Buscador de canciones
-- 🎠 Carrusel de recomendaciones
-- 📊 Dashboard de usuario
-- 📱 Diseño responsive
+-  Reproductor de música con controles
+-  Animación de ondas de fondo
+-  Tema oscuro/claro
+-  Buscador de canciones
+-  Carrusel de recomendaciones
+-  Dashboard de usuario
+-  Diseño responsive
 
 ## Notas
 
