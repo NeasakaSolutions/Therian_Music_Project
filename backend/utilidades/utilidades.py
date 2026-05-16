@@ -1,4 +1,5 @@
 # Importaciones
+from django.core.paginator import Paginator
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -37,3 +38,21 @@ def sendMail(html, asunto, para):
 
     except SMTPResponseException as e:
         print('error envio mail')
+
+def paginar(request, queryset, limite=10):
+
+    page = request.GET.get("page", 1)
+
+    paginator = Paginator(queryset, limite)
+
+    registros = paginator.get_page(page)
+
+    return {
+        "data": registros,
+        "pagina_actual": registros.number,
+        "total_paginas": paginator.num_pages,
+        "total_registros": paginator.count,
+        "hay_siguiente": registros.has_next(),
+        "hay_anterior": registros.has_previous()
+    }
+

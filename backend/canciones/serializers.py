@@ -13,11 +13,12 @@ class CancionSerializer(serializers.ModelSerializer):
     imagen = serializers.SerializerMethodField()
     cancion = serializers.SerializerMethodField()
     video = serializers.SerializerMethodField()
+    user = serializers.ReadOnlyField(source = "user.first_name")
 
     class Meta:
         model = Cancion
         fields = ("id", "nombre", "slug", "descripcion", "fecha", "categoria_id", "categoria", 
-                  "artista_id", "artista", "imagen", "cancion", "video")
+                  "artista_id", "artista", "imagen", "cancion", "video", "user_id", "user")
 
     # Formateo de la imagen:
     def get_imagen(self, obj):
