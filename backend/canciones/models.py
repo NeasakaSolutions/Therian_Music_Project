@@ -1,12 +1,14 @@
 # Importaciones:
 from django.db import models
 from autoslug import AutoSlugField
+from django.contrib.auth.models import User
 from categorias.models import Categoria
 from artistas.models import Artista
 
 
 # Create your models here.
 class Cancion(models.Model):
+    user = models.ForeignKey(User, models.DO_NOTHING, default = 1)
     artista = models.ForeignKey(Artista, models.DO_NOTHING)
     categoria = models.ForeignKey(Categoria, models.DO_NOTHING)
     nombre = models.CharField(max_length = 100, null = False)

@@ -11,7 +11,10 @@ from django.utils.text import slugify
 from django.utils.dateformat import DateFormat
 from datetime import datetime
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 from seguridad.decorators import logueado
+from utilidades.utilidades import paginar
+from  jose import jwt
 from canciones.models import Cancion
 from categorias.models import Categoria
 from artistas.models import Artista
@@ -20,13 +23,25 @@ from canciones.serializers import CancionSerializer
 # Clase sin argumentos:
 class CancionesLista(APIView):
 
-    # COnsultar registros:
+    # Consultar registros:
     def get(self, request):
-        data = Cancion.objects.order_by("-id").all()
-        datos_json = CancionSerializer(data, many = True)
+
+        data = Cancion.objects.order_by("-id")
+
+        paginado = paginar(request, data, 10)
+
+        datos_json = CancionSerializer(
+            paginado["data"],
+            many=True
+        )
 
         return JsonResponse({
-            "data": datos_json.data
+            "data": datos_json.data,
+            "pagina_actual": paginado["pagina_actual"],
+            "total_paginas": paginado["total_paginas"],
+            "total_registros": paginado["total_registros"],
+            "hay_siguiente": paginado["hay_siguiente"],
+            "hay_anterior": paginado["hay_anterior"]
         })
     
     # Agregar campo
@@ -96,6 +111,22 @@ class CancionesLista(APIView):
                 "mensaje": "La cancion ya existe"
             }, status=HTTPStatus.BAD_REQUEST)
 
+
+        # obtener usuario del token
+        try:
+            header = request.headers.get("Authorization").split(" ")
+
+            resuelto = jwt.decode(
+                header[1],
+                settings.SECRET_KEY,
+                algorithms=["HS512"]
+            )
+
+        except Exception:
+            return JsonResponse({
+                "estado": "error",
+                "mensaje": "Token invalido"
+            }, status=HTTPStatus.UNAUTHORIZED)
 
         fs = FileSystemStorage()
 
@@ -169,7 +200,8 @@ class CancionesLista(APIView):
                 fecha=datetime.now(),
                 foto=foto,
                 cancion=cancion,
-                video=video
+                video=video,
+                user_id = resuelto["id"]
             )
 
             return JsonResponse({
@@ -203,7 +235,9 @@ class CancionDetalle(APIView):
                     "categoria": data.categoria.nombre,
                     "imagen": f"{os.getenv("BASE_URL")}uploads/canciones/{data.foto}",
                     "cancion": f"{os.getenv("BASE_URL")}uploads/canciones/{data.cancion}",
-                    "video": f"{os.getenv("BASE_URL")}uploads/canciones/{data.video}"
+                    "video": f"{os.getenv("BASE_URL")}uploads/canciones/{data.video}",
+                    "user_id": data.user_id,
+                    "user": data.user.first_name
                     }
             }, status = HTTPStatus.OK)
 
