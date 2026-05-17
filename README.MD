@@ -70,20 +70,6 @@ CREATE DATABASE therian_music_project CHARACTER SET utf8mb4 COLLATE utf8mb4_unic
 Edita `backend/.env.local`:
 
 ```
-DATABASE_SERVER=localhost
-DATABASE_USER=root
-DATABASE_PASSWORD=
-DATABASE_PORT=3306
-DATABASE_DB=therian_music_project
-DEBUG=True
-BASE_URL=http://127.0.0.1:8000/
-FRONTEND_URL=http://localhost:5173
-
-SMTP_SERVER=sandbox.smtp.mailtrap.io
-SMTP_PORT=587
-SMTP_USER=tu_usuario_mailtrap
-SMTP_PASSWORD=tu_password_mailtrap
-```
 
 ### 3. Instalar dependencias
 
@@ -221,14 +207,6 @@ Todas las rutas están bajo el prefijo `/api/mai/`.
    - Selecciona imagen opcional y video opcional
    - Crea nuevo artista o categoría si no existen en el sistema
    - Envía el formulario y la canción aparece en su panel y en la lista general
-
----
-
-## Credenciales de prueba
-
-| Email | Contraseña | Estado |
-|-------|-----------|--------|
-| `test@test.com` | `Test1234!` | Pre-activado, 12 canciones subidas |
 
 ---
 
