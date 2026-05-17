@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
@@ -10,6 +11,11 @@ const router = useRouter()
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
 const musicStore = useMusicStore()
+
+onMounted(() => {
+  musicStore.loadHomeTracks()
+  musicStore.loadPlaylist()
+})
 
 function handleTrackSelect(track) {
   musicStore.playTrack(track)

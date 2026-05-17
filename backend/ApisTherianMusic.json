@@ -1,0 +1,701 @@
+{
+	"info": {
+		"_postman_id": "1dd42280-6f8e-41b4-bfb9-4da822816a44",
+		"name": "Django_Therian_Music",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46266878",
+		"_collection_link": "https://neasaka-8828260.postman.co/workspace/Neasaka's-Workspace~c3b786f1-b98a-46b8-8c1d-c44ca203e4cb/collection/46266878-1dd42280-6f8e-41b4-bfb9-4da822816a44?action=share&source=collection_link&creator=46266878"
+	},
+	"item": [
+		{
+			"name": "Ejemplo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"correo\": \"satou.3443@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/ouzuka",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"ouzuka"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ejemplo-Uploads",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/satou/Documentos/Fondos/MAI_03.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/ouzuka-upload",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"ouzuka-upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categorias",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Categoria de Prueba\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/categorias",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categoria",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Electronica\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/categorias/6",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"categorias",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Artistas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"BBNO$\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/artistas",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"artistas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Artista",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Artista editado\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/artistas/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"artistas",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiSVNTIjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwLyIsImlhdCI6MTc3ODg5MjUzOCwiZXhwIjoxNzc4OTc4OTM4fQ.RBPQDqRokFFudmsgypfz9hGw6G9_xmVq7moPRRCkOG_1TlD_NpnvAW8509BQt6xltTGJ6deeeVKHBQDpFknS-g",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Prueba de user",
+							"type": "text"
+						},
+						{
+							"key": "descripcion",
+							"value": "ijole",
+							"type": "text"
+						},
+						{
+							"key": "categoria_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "artista_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/home/satou/Descargas/Fondos/satou.jpg"
+						},
+						{
+							"key": "cancion",
+							"type": "file",
+							"src": "/home/satou/Descargas/oguri.mp3"
+						},
+						{
+							"key": "video",
+							"type": "file",
+							"src": "/home/satou/Descargas/WhatsApp Video 2026-04-20 at 1.19.08 PM.mp4"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones/17",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones",
+						"17"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancion Update",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Prueba de edicion\",\n    \"descripcion\": \"Descripcion de prueba\",\n    \"categoria_id\": 3,\n    \"artista_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones/17",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones",
+						"17"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Mai\",\n    \"correo\": \"mai.ouzuka.1234@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/seguridad/registro",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"seguridad",
+						"registro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contactos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Ijole\",\n    \"correo\": \"ijole@correo.com\",\n    \"telefono\": \"1234567890\",\n    \"mensaje\": \"ijole\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/contacto",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"contacto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"correo\": \"yo@maiouzuka.com\",\n    \"password\":  \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/seguridad/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"seguridad",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones Panel",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiSVNTIjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwLyIsImlhdCI6MTc3ODg5MjUzOCwiZXhwIjoxNzc4OTc4OTM4fQ.RBPQDqRokFFudmsgypfz9hGw6G9_xmVq7moPRRCkOG_1TlD_NpnvAW8509BQt6xltTGJ6deeeVKHBQDpFknS-g",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones-panel/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones-panel",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones Editar Foto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "18",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/home/satou/Documentos/Fondos/Mi vieja.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones/editar/foto",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones",
+						"editar",
+						"foto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones Editar Cancion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "18",
+							"type": "text"
+						},
+						{
+							"key": "cancion",
+							"type": "file",
+							"src": "/home/satou/Descargas/oguri.mp3"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones/editar/cancion",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones",
+						"editar",
+						"cancion"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "18",
+							"disabled": true
+						},
+						{
+							"key": "cancion",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones Editar Video",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "18",
+							"type": "text"
+						},
+						{
+							"key": "video",
+							"type": "file",
+							"src": "/home/satou/Descargas/WhatsApp Video 2026-04-20 at 1.21.14 PM.mp4"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones/editar/video",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones",
+						"editar",
+						"video"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones Slug",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones/slug/prueba",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones",
+						"slug",
+						"prueba"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones-home",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones-home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canciones Buscador",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/mai/canciones-buscador?categoria_id=1&search=nomb",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"mai",
+						"canciones-buscador"
+					],
+					"query": [
+						{
+							"key": "categoria_id",
+							"value": "1"
+						},
+						{
+							"key": "search",
+							"value": "nomb"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

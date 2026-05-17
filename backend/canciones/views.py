@@ -235,7 +235,7 @@ class CancionDetalle(APIView):
                     "categoria": data.categoria.nombre,
                     "imagen": f"{os.getenv("BASE_URL")}uploads/canciones/{data.foto}",
                     "cancion": f"{os.getenv("BASE_URL")}uploads/canciones/{data.cancion}",
-                    "video": f"{os.getenv("BASE_URL")}uploads/canciones/{data.video}",
+                    "video": f"{os.getenv("BASE_URL")}uploads/canciones/{data.video}" if data.video else None,
                     "user_id": data.user_id,
                     "user": data.user.first_name
                     }

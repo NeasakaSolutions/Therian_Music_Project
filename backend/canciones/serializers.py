@@ -30,4 +30,6 @@ class CancionSerializer(serializers.ModelSerializer):
     
     # Formateo de los videos:
     def get_video(self, obj):
+        if not obj.video:
+            return None
         return f"{os.getenv("BASE_URL")}uploads/canciones/{obj.video}"
